@@ -15,3 +15,26 @@
     "parentPassword":"pass456"
   }
 ]
+
+/*[
+  {
+    "name":"Athul",
+    "class":"8",
+    "div":"A",
+    "roll":1,
+    "parentPassword":"pass123"
+  },
+
+  {
+
+    "name":"Riya",
+    "class":"8",
+    "div":"A",
+    "roll":2,
+    "parentPassword":"pass456"
+  }
+]
+
+this is an example of adding student data in the attendance list.
+this is data class so you should seperate with comas ','.
+*/

@@ -1,20 +1,4 @@
-[
-  {
-    "name":"Athul",
-    "class":"8",
-    "div":"A",
-    "roll":1,
-    "parentPassword":"pass123"
-  },
 
-  {
-    "name":"Riya",
-    "class":"8",
-    "div":"A",
-    "roll":2,
-    "parentPassword":"pass456"
-  }
-]
 
 /*[
   {

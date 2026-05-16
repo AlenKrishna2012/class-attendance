@@ -1,18 +1,4 @@
-[
-  {
-    "id":"T001",
-    "name":"Arun Kumar",
-    "subject":"Maths",
-    "type":"Teaching"
-  },
 
-  {
-    "id":"T002",
-    "name":"Neha Joseph",
-    "subject":"Science",
-    "type":"Teaching"
-  }
-]
 
 /*[
   {

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Secure School Attendance</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+
+:root{
+    --bg1:#07111f;
+    --bg2:#0f172a;
+    --bg3:#1e293b;
+
+    --card:rgba(255,255,255,0.08);
+    --border:rgba(255,255,255,0.15);
+
+    --text:#ffffff;
+    --muted:#cbd5e1;
+
+    --blue:#38bdf8;
+    --hover:#0ea5e9;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    color:var(--text);
+
+    background:
+    radial-gradient(circle at top left,#1d4ed8 0%,transparent 30%),
+    radial-gradient(circle at bottom right,#0ea5e9 0%,transparent 25%),
+    linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
+}
+
+/* PERFORMANCE FRIENDLY BACKGROUND GLOW */
+
+body::before{
+    content:"";
+
+    position:absolute;
+    width:500px;
+    height:500px;
+
+    background:rgba(56,189,248,0.08);
+
+    filter:blur(120px);
+
+    border-radius:50%;
+
+    top:-150px;
+    left:-100px;
+
+    z-index:0;
+}
+
+body::after{
+    content:"";
+
+    position:absolute;
+    width:400px;
+    height:400px;
+
+    background:rgba(59,130,246,0.08);
+
+    filter:blur(100px);
+
+    border-radius:50%;
+
+    bottom:-120px;
+    right:-100px;
+
+    z-index:0;
+}
+
+/* MAIN CONTAINER */
+
+.container{
+    width:92%;
+    max-width:1150px;
+
+    position:relative;
+    z-index:2;
+}
+
+/* TOP BAR */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:45px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.logo-circle{
+    width:55px;
+    height:55px;
+
+    border-radius:16px;
+
+    background:linear-gradient(135deg,#38bdf8,#2563eb);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:24px;
+    font-weight:bold;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+.logo h2{
+    font-size:24px;
+}
+
+.status{
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:rgba(34,197,94,0.12);
+
+    border:1px solid rgba(34,197,94,0.2);
+
+    color:#86efac;
+
+    font-size:14px;
+}
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    margin-bottom:55px;
+}
+
+.hero h1{
+    font-size:56px;
+    line-height:1.1;
+
+    margin-bottom:18px;
+
+    font-weight:800;
+}
+
+.hero p{
+    color:var(--muted);
+
+    max-width:750px;
+
+    margin:auto;
+
+    line-height:1.7;
+
+    font-size:18px;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:28px;
+}
+
+/* CARD */
+
+.card{
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    padding:35px;
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:0.25s ease;
+
+    backdrop-filter:blur(10px);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+
+    border-color:rgba(56,189,248,0.5);
+
+    background:rgba(255,255,255,0.11);
+}
+
+.card::before{
+    content:"";
+
+    position:absolute;
+
+    width:140px;
+    height:140px;
+
+    border-radius:50%;
+
+    background:rgba(56,189,248,0.08);
+
+    top:-50px;
+    right:-50px;
+}
+
+.icon{
+    width:70px;
+    height:70px;
+
+    border-radius:22px;
+
+    background:linear-gradient(135deg,#38bdf8,#2563eb);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:30px;
+
+    margin-bottom:22px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+.card h2{
+    font-size:28px;
+    margin-bottom:12px;
+}
+
+.card p{
+    color:var(--muted);
+    line-height:1.7;
+    margin-bottom:22px;
+}
+
+.open-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.08);
+
+    color:white;
+
+    font-size:15px;
+}
+
+/* FOOTER */
+
+.footer{
+    margin-top:45px;
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    font-size:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .topbar{
+        flex-direction:column;
+        gap:15px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- TOP -->
+
+    <div class="topbar">
+
+        <div class="logo">
+
+            <div class="logo-circle">
+                🛡
+            </div>
+
+            <div>
+                <h2>Secure Attendance</h2>
+            </div>
+
+        </div>
+
+        <div class="status">
+            System Protected
+        </div>
+
+    </div>
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <h1>
+            Smart & Secure<br>
+            School Attendance System
+        </h1>
+
+        <p>
+            High security attendance management system for schools with
+            protected parent access, teacher management, attendance records,
+            and secure school authentication.
+        </p>
+
+    </div>
+
+    <!-- CARDS -->
+
+    <div class="grid">
+
+        <!-- TEACHER -->
+
+        <a href="add_attendance.html" class="card">
+
+            <div class="icon">
+                👨‍🏫
+            </div>
+
+            <h2>Teacher Portal</h2>
+
+            <p>
+                Add and manage student attendance securely with protected
+                class access and daily attendance records.
+            </p>
+
+            <div class="open-btn">
+                Open Portal →
+            </div>
+
+        </a>
+
+        <!-- PARENT -->
+
+        <a href="parent_only_view.html" class="card">
+
+            <div class="icon">
+                👨‍👩‍👧
+            </div>
+
+            <h2>Parent Portal</h2>
+
+            <p>
+                Parents can securely check student attendance records using
+                class details and parent authentication password.
+            </p>
+
+            <div class="open-btn">
+                View Attendance →
+            </div>
+
+        </a>
+
+        <!-- SECURITY -->
+
+        <div class="card">
+
+            <div class="icon">
+                🔒
+            </div>
+
+            <h2>Protected System</h2>
+
+            <p>
+                School-based secure access system with encrypted credentials,
+                protected attendance records, and controlled access.
+            </p>
+
+            <div class="open-btn">
+                Security Enabled
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+        Secure School Attendance System © 2026
+    </div>
+
+</div>
+
+</body>
+</html>

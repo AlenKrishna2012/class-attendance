@@ -1,0 +1,35 @@
+[
+  {
+    "id":"T001",
+    "name":"Arun Kumar",
+    "subject":"Maths",
+    "type":"Teaching"
+  },
+
+  {
+    "id":"T002",
+    "name":"Neha Joseph",
+    "subject":"Science",
+    "type":"Teaching"
+  }
+]
+
+/*[
+  {
+    "id":"T001",
+    "name":"Arun Kumar",
+    "subject":"Maths",
+    "type":"Teaching"
+  },
+
+  {
+    "id":"T002",
+    "name":"Neha Joseph",
+    "subject":"Science",
+    "type":"Teaching"
+  }
+]
+
+this is an example of adding teacher data in the attendance list.
+this is data class so you should separate with commas ','.
+*/

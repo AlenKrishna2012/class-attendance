@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Parent Portal</title>
 
@@ -58,6 +57,19 @@ body{
 
 .top p{
     color:var(--muted);
+}
+
+.logout-link{
+    display:inline-block;
+    margin-top:10px;
+    color:#93c5fd;
+    text-decoration:none;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.logout-link:hover{
+    text-decoration:underline;
 }
 
 .card{
@@ -157,9 +169,8 @@ button:hover{
 
         <h1>Parent Portal</h1>
 
-        <p>
-            View attendance using parent password
-        </p>
+        <p id="sessionInfo"></p>
+        <a class="logout-link" onclick="logout()">← Back to Login</a>
 
     </div>
 
@@ -189,6 +200,32 @@ button:hover{
 
 let students=[];
 let attendance={};
+
+function logout(){
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("school");
+    localStorage.removeItem("userId");
+    window.location.href="index.html";
+}
+
+function checkAuth(){
+    let role=localStorage.getItem("userRole");
+    let school=localStorage.getItem("school");
+    
+    if(role!=="parent" || !school){
+        window.location.href="index.html";
+        return;
+    }
+    
+    let schoolNames={
+        "school1":"Central Public School",
+        "school2":"Riverside Academy",
+        "school3":"Green Valley High School",
+        "school4":"St. Mary's Institution"
+    };
+    
+    document.getElementById("sessionInfo").textContent=`${schoolNames[school]} | Parent ID: ${localStorage.getItem("userId")}`;
+}
 
 async function loadFiles(){
 
@@ -304,6 +341,7 @@ async function viewAttendance(){
 
 }
 
+checkAuth();
 loadFiles();
 
 </script>

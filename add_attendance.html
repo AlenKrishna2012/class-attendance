@@ -43,15 +43,31 @@ body{
 
 .top{
     margin-bottom:30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .top h1{
     font-size:42px;
-    margin-bottom:10px;
 }
 
 .top p{
     color:var(--muted);
+}
+
+.logout-btn{
+    background:rgba(239,68,68,0.2);
+    border:1px solid rgba(239,68,68,0.3);
+    color:#fca5a5;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.logout-btn:hover{
+    background:rgba(239,68,68,0.3);
 }
 
 .card{
@@ -146,13 +162,11 @@ tr{
 <div class="container">
 
     <div class="top">
-
-        <h1>Teacher Attendance Portal</h1>
-
-        <p>
-            Dynamically loads students from files
-        </p>
-
+        <div>
+            <h1>Teacher Attendance Portal</h1>
+            <p id="sessionInfo"></p>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
     <div class="card">
@@ -208,6 +222,32 @@ tr{
 <script>
 
 let students=[];
+
+function logout(){
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("school");
+    localStorage.removeItem("userId");
+    window.location.href="index.html";
+}
+
+function checkAuth(){
+    let role=localStorage.getItem("userRole");
+    let school=localStorage.getItem("school");
+    
+    if(role!=="teacher" || !school){
+        window.location.href="index.html";
+        return;
+    }
+    
+    let schoolNames={
+        "school1":"Central Public School",
+        "school2":"Riverside Academy",
+        "school3":"Green Valley High School",
+        "school4":"St. Mary's Institution"
+    };
+    
+    document.getElementById("sessionInfo").textContent=`${schoolNames[school]} | Teacher ID: ${localStorage.getItem("userId")}`;
+}
 
 async function loadData(){
 
@@ -355,6 +395,7 @@ function saveAttendance(){
 
 }
 
+checkAuth();
 loadData();
 
 </script>

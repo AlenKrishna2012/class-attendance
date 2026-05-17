@@ -48,9 +48,8 @@ body{
     align-items:center;
 
     position:relative;
+    padding:20px;
 }
-
-/* PERFORMANCE FRIENDLY BACKGROUND GLOW */
 
 body::before{
     content:"";
@@ -90,8 +89,6 @@ body::after{
     z-index:0;
 }
 
-/* MAIN CONTAINER */
-
 .container{
     width:92%;
     max-width:1150px;
@@ -99,8 +96,6 @@ body::after{
     position:relative;
     z-index:2;
 }
-
-/* TOP BAR */
 
 .topbar{
     display:flex;
@@ -152,8 +147,6 @@ body::after{
     font-size:14px;
 }
 
-/* HERO */
-
 .hero{
     text-align:center;
     margin-bottom:55px;
@@ -180,8 +173,6 @@ body::after{
     font-size:18px;
 }
 
-/* GRID */
-
 .grid{
     display:grid;
 
@@ -189,8 +180,6 @@ body::after{
 
     gap:28px;
 }
-
-/* CARD */
 
 .card{
     background:var(--card);
@@ -212,6 +201,8 @@ body::after{
     position:relative;
 
     overflow:hidden;
+
+    cursor:pointer;
 }
 
 .card:hover{
@@ -284,8 +275,6 @@ body::after{
     font-size:15px;
 }
 
-/* FOOTER */
-
 .footer{
     margin-top:45px;
 
@@ -296,7 +285,135 @@ body::after{
     font-size:14px;
 }
 
-/* MOBILE */
+/* MODAL STYLES */
+
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-content{
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:28px;
+    padding:40px;
+    max-width:450px;
+    width:90%;
+    backdrop-filter:blur(10px);
+    position:relative;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.modal-header h2{
+    font-size:28px;
+}
+
+.close-btn{
+    background:none;
+    border:none;
+    font-size:28px;
+    color:var(--muted);
+    cursor:pointer;
+}
+
+.close-btn:hover{
+    color:var(--text);
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px 14px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--text);
+    font-size:15px;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    outline:none;
+    border-color:var(--blue);
+    background:rgba(56,189,248,0.1);
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    background:linear-gradient(135deg,#38bdf8,#2563eb);
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.submit-btn:hover{
+    opacity:0.9;
+}
+
+.error-msg{
+    color:#f87171;
+    font-size:13px;
+    margin-top:5px;
+    display:none;
+}
+
+.checkbox-group{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:15px;
+}
+
+.checkbox-group input[type="checkbox"]{
+    width:18px;
+    height:18px;
+    cursor:pointer;
+}
+
+.checkbox-group label{
+    margin:0;
+    cursor:pointer;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.admin-icon{
+    background:linear-gradient(135deg,#ef4444,#dc2626) !important;
+}
 
 @media(max-width:700px){
 
@@ -311,6 +428,10 @@ body::after{
     .topbar{
         flex-direction:column;
         gap:15px;
+    }
+
+    .modal-content{
+        padding:30px;
     }
 
 }
@@ -355,8 +476,7 @@ body::after{
 
         <p>
             High security attendance management system for schools with
-            protected parent access, teacher management, attendance records,
-            and secure school authentication.
+            protected access for admin, teachers, parents & students.
         </p>
 
     </div>
@@ -365,9 +485,30 @@ body::after{
 
     <div class="grid">
 
+        <!-- ADMIN -->
+
+        <div class="card" onclick="openModal('adminModal')">
+
+            <div class="icon admin-icon">
+                👑
+            </div>
+
+            <h2>Admin Portal</h2>
+
+            <p>
+                Principal access with secure password verification for
+                school management and system administration.
+            </p>
+
+            <div class="open-btn">
+                Admin Login →
+            </div>
+
+        </div>
+
         <!-- TEACHER -->
 
-        <a href="add_attendance.html" class="card">
+        <div class="card" onclick="openModal('teacherModal')">
 
             <div class="icon">
                 👨‍🏫
@@ -381,14 +522,14 @@ body::after{
             </p>
 
             <div class="open-btn">
-                Open Portal →
+                Teacher Login →
             </div>
 
-        </a>
+        </div>
 
         <!-- PARENT -->
 
-        <a href="parent_only_view.html" class="card">
+        <div class="card" onclick="openModal('parentModal')">
 
             <div class="icon">
                 👨‍👩‍👧
@@ -398,32 +539,32 @@ body::after{
 
             <p>
                 Parents can securely check student attendance records using
-                class details and parent authentication password.
+                verified credentials and authentication.
             </p>
 
             <div class="open-btn">
-                View Attendance →
+                Parent Login →
             </div>
 
-        </a>
+        </div>
 
-        <!-- SECURITY -->
+        <!-- STUDENT -->
 
-        <div class="card">
+        <div class="card" onclick="openModal('studentModal')">
 
             <div class="icon">
-                🔒
+                👨‍🎓
             </div>
 
-            <h2>Protected System</h2>
+            <h2>Student Portal</h2>
 
             <p>
-                School-based secure access system with encrypted credentials,
-                protected attendance records, and controlled access.
+                Students can view their attendance records and daily status
+                with secure student authentication.
             </p>
 
             <div class="open-btn">
-                Security Enabled
+                Student Login →
             </div>
 
         </div>
@@ -437,6 +578,347 @@ body::after{
     </div>
 
 </div>
+
+<!-- ADMIN MODAL -->
+
+<div id="adminModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Admin Login</h2>
+            <button class="close-btn" onclick="closeModal('adminModal')">×</button>
+        </div>
+
+        <div class="form-group">
+            <label>Select School</label>
+            <select id="adminSchool">
+                <option value="">Choose School...</option>
+                <option value="school1">Central Public School</option>
+                <option value="school2">Riverside Academy</option>
+                <option value="school3">Green Valley High School</option>
+                <option value="school4">St. Mary's Institution</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Principal ID</label>
+            <input type="text" id="adminId" placeholder="Enter Principal ID">
+        </div>
+
+        <div class="form-group">
+            <label>Principal Password (From Principal)</label>
+            <input type="password" id="adminPassword" placeholder="Enter Principal Password">
+            <div class="error-msg" id="adminError"></div>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="adminRemember">
+            <label for="adminRemember">Remember this device</label>
+        </div>
+
+        <button class="submit-btn" onclick="loginAdmin()">Login as Admin</button>
+
+    </div>
+
+</div>
+
+<!-- TEACHER MODAL -->
+
+<div id="teacherModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Teacher Login</h2>
+            <button class="close-btn" onclick="closeModal('teacherModal')">×</button>
+        </div>
+
+        <div class="form-group">
+            <label>Select School</label>
+            <select id="teacherSchool">
+                <option value="">Choose School...</option>
+                <option value="school1">Central Public School</option>
+                <option value="school2">Riverside Academy</option>
+                <option value="school3">Green Valley High School</option>
+                <option value="school4">St. Mary's Institution</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Teacher ID</label>
+            <input type="text" id="teacherId" placeholder="Enter Teacher ID">
+        </div>
+
+        <div class="form-group">
+            <label>Department</label>
+            <select id="teacherDept">
+                <option value="">Select Department...</option>
+                <option value="English">English</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Science">Science</option>
+                <option value="Social Studies">Social Studies</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Teacher Password</label>
+            <input type="password" id="teacherPassword" placeholder="Enter Password (From Principal)">
+            <div class="error-msg" id="teacherError"></div>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="teacherRemember">
+            <label for="teacherRemember">Remember this device</label>
+        </div>
+
+        <button class="submit-btn" onclick="loginTeacher()">Login as Teacher</button>
+
+    </div>
+
+</div>
+
+<!-- PARENT MODAL -->
+
+<div id="parentModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Parent Login</h2>
+            <button class="close-btn" onclick="closeModal('parentModal')">×</button>
+        </div>
+
+        <div class="form-group">
+            <label>Select School</label>
+            <select id="parentSchool">
+                <option value="">Choose School...</option>
+                <option value="school1">Central Public School</option>
+                <option value="school2">Riverside Academy</option>
+                <option value="school3">Green Valley High School</option>
+                <option value="school4">St. Mary's Institution</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Parent ID</label>
+            <input type="text" id="parentId" placeholder="Enter Parent ID">
+        </div>
+
+        <div class="form-group">
+            <label>Student ID (for verification)</label>
+            <input type="text" id="parentStudentId" placeholder="Enter Student ID">
+        </div>
+
+        <div class="form-group">
+            <label>Parent Password</label>
+            <input type="password" id="parentPassword" placeholder="Enter Password (From Principal)">
+            <div class="error-msg" id="parentError"></div>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="parentRemember">
+            <label for="parentRemember">Remember this device</label>
+        </div>
+
+        <button class="submit-btn" onclick="loginParent()">Login as Parent</button>
+
+    </div>
+
+</div>
+
+<!-- STUDENT MODAL -->
+
+<div id="studentModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Student Login</h2>
+            <button class="close-btn" onclick="closeModal('studentModal')">×</button>
+        </div>
+
+        <div class="form-group">
+            <label>Select School</label>
+            <select id="studentSchool">
+                <option value="">Choose School...</option>
+                <option value="school1">Central Public School</option>
+                <option value="school2">Riverside Academy</option>
+                <option value="school3">Green Valley High School</option>
+                <option value="school4">St. Mary's Institution</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Student ID</label>
+            <input type="text" id="studentId" placeholder="Enter Student ID">
+        </div>
+
+        <div class="form-group">
+            <label>Student Password</label>
+            <input type="password" id="studentPassword" placeholder="Enter Password (From Principal)">
+            <div class="error-msg" id="studentError"></div>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="studentRemember">
+            <label for="studentRemember">Remember this device</label>
+        </div>
+
+        <button class="submit-btn" onclick="loginStudent()">Login as Student</button>
+
+    </div>
+
+</div>
+
+<script>
+
+const PASSWORDS={
+    school1:{
+        admin:"principal@cps2026",
+        teacher:"teach@cps789",
+        parent:"parent#cps456",
+        student:"student!cps123"
+    },
+    school2:{
+        admin:"admin$riverside2026",
+        teacher:"riverside#teach2026",
+        parent:"ra@parent2026",
+        student:"ra$student2026"
+    },
+    school3:{
+        admin:"gvh!admin2026",
+        teacher:"gvh@teach2026",
+        parent:"gvh#parent2026",
+        student:"gvh$student2026"
+    },
+    school4:{
+        admin:"stm%admin2026",
+        teacher:"stm!teach2026",
+        parent:"stm@parent2026",
+        student:"stm#student2026"
+    }
+};
+
+function openModal(modalId){
+    document.getElementById(modalId).classList.add("active");
+}
+
+function closeModal(modalId){
+    document.getElementById(modalId).classList.remove("active");
+    clearErrors();
+}
+
+function clearErrors(){
+    document.querySelectorAll(".error-msg").forEach(el=>el.style.display="none");
+}
+
+function showError(elementId,message){
+    let el=document.getElementById(elementId);
+    if(el){
+        el.textContent=message;
+        el.style.display="block";
+    }
+}
+
+function loginAdmin(){
+    let school=document.getElementById("adminSchool").value;
+    let id=document.getElementById("adminId").value;
+    let password=document.getElementById("adminPassword").value;
+    let remember=document.getElementById("adminRemember").checked;
+
+    if(!school || !id || !password){
+        showError("adminError","All fields required");
+        return;
+    }
+
+    if(password===PASSWORDS[school].admin){
+        if(remember) localStorage.setItem("rememberDevice","true");
+        localStorage.setItem("userRole","admin");
+        localStorage.setItem("school",school);
+        localStorage.setItem("userId",id);
+        window.location.href="add_attendance.html";
+    }else{
+        showError("adminError","Invalid password");
+    }
+}
+
+function loginTeacher(){
+    let school=document.getElementById("teacherSchool").value;
+    let id=document.getElementById("teacherId").value;
+    let password=document.getElementById("teacherPassword").value;
+    let remember=document.getElementById("teacherRemember").checked;
+
+    if(!school || !id || !password){
+        showError("teacherError","All fields required");
+        return;
+    }
+
+    if(password===PASSWORDS[school].teacher){
+        if(remember) localStorage.setItem("rememberDevice","true");
+        localStorage.setItem("userRole","teacher");
+        localStorage.setItem("school",school);
+        localStorage.setItem("userId",id);
+        window.location.href="add_attendance.html";
+    }else{
+        showError("teacherError","Invalid password");
+    }
+}
+
+function loginParent(){
+    let school=document.getElementById("parentSchool").value;
+    let id=document.getElementById("parentId").value;
+    let studentId=document.getElementById("parentStudentId").value;
+    let password=document.getElementById("parentPassword").value;
+    let remember=document.getElementById("parentRemember").checked;
+
+    if(!school || !id || !studentId || !password){
+        showError("parentError","All fields required");
+        return;
+    }
+
+    if(password===PASSWORDS[school].parent){
+        if(remember) localStorage.setItem("rememberDevice","true");
+        localStorage.setItem("userRole","parent");
+        localStorage.setItem("school",school);
+        localStorage.setItem("userId",id);
+        localStorage.setItem("studentId",studentId);
+        window.location.href="parent_only_view.html";
+    }else{
+        showError("parentError","Invalid password");
+    }
+}
+
+function loginStudent(){
+    let school=document.getElementById("studentSchool").value;
+    let id=document.getElementById("studentId").value;
+    let password=document.getElementById("studentPassword").value;
+    let remember=document.getElementById("studentRemember").checked;
+
+    if(!school || !id || !password){
+        showError("studentError","All fields required");
+        return;
+    }
+
+    if(password===PASSWORDS[school].student){
+        if(remember) localStorage.setItem("rememberDevice","true");
+        localStorage.setItem("userRole","student");
+        localStorage.setItem("school",school);
+        localStorage.setItem("userId",id);
+        alert("Student portal coming soon!");
+    }else{
+        showError("studentError","Invalid password");
+    }
+}
+
+window.onclick=function(event){
+    if(event.target.classList.contains("modal")){
+        event.target.classList.remove("active");
+        clearErrors();
+    }
+}
+
+</script>
 
 </body>
 </html>
